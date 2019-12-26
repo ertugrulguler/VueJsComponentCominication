@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+
+    <script src="./components/ListItem1.js"></script>
+    <script src="./components/ListItem2.js"></script>
+    <script src="./components/my-api.js"></script>
+
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <listitem1 :id="siteid" :listitem="selecteditems" @list-item-changed="listItemClickedHandle">
+        </listitem1>
+
+        <listitem2 :id="siteid" :listitem="selecteditems">
+        </listitem2>
+
+    </div>
+
+    <div id="api">
+        <myapi @getapi="getApiList" :my-ApiList="infos"></myapi>
+        <p>{{infos}}</p>
+    </div>
+
+    <my-card @getApi="getApiList" :my-ApiList="infos"></my-card>
+
+</body>
+
+
+<script>
+    new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                siteid: -1,
+                list1selectedid: null,
+                selectedtitle: '',
+                selecteditems: []
+            }
+        },
+        methods: {
+            listItemClickedHandle: function (item) {
+
+                var vm = this;
+                vm.list1selectedid = item.id;
+                vm.selectedtitle = item.title;
+                vm.selecteditems.push({
+                    id: vm.list1selectedid,
+                    title: vm.selectedtitle
+                })
+
+
+            }
+        }
+    }
+    );
+
+    new Vue({
+        el: '#api',
+        data() {
+            return {
+                infos: []
+            }
+        },
+        methods: {
+            getApiList: function (items) {
+
+                var vm = this;
+                axios
+                    .get('https://jsonplaceholder.typicode.com/users')
+                    .then(response => (vm.infos.push(response.data)));
+                console.log(vm.infos)
+
+
+            }
+        }
+    })
+</script>
+
+</html>
