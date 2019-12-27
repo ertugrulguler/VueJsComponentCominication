@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 
     <script src="./components/ListItem1.js"></script>
     <script src="./components/ListItem2.js"></script>
     <script src="./components/my-api.js"></script>
+    <script src="./components/card.js"></script>
 
 
     <title>Document</title>
@@ -27,11 +29,14 @@
     </div>
 
     <div id="api">
-        <myapi @getapi="getApiList" :my-ApiList="infos"></myapi>
-        <p>{{infos}}</p>
+        <div>
+        <myapi @getapi="getapilist" :my-ApiList="infos"></myapi>
+        <!-- <p>{{infos}}</p> -->
+        
+        <my-card @getApi="getapilist" :myApiList="infos" ></my-card>
+    </div>
     </div>
 
-    <my-card @getApi="getApiList" :my-ApiList="infos"></my-card>
 
 </body>
 
@@ -72,14 +77,14 @@
             }
         },
         methods: {
-            getApiList: function (items) {
+            getapilist: function (items) {
 
                 var vm = this;
                 axios
                     .get('https://jsonplaceholder.typicode.com/users')
-                    .then(response => (vm.infos.push(response.data)));
-                console.log(vm.infos)
-
+                    .then(response => (this.infos.push(response.data)));
+                // console.log(vm.infos)
+                
 
             }
         }

@@ -1,5 +1,5 @@
 Vue.component("myapi", {
-  props: ["my-ApiList"],
+  props: ["myapilist"],
   template: `
         <button class='btn btn-primary' @click="$emit('getapi',items)">Verileri Çek</button>
     `,

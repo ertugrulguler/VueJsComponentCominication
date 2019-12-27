@@ -30,8 +30,6 @@ Vue.component("listitem2", {
           title: i.title
         });
       });
-
-      console.log(list);
       vm.listsource = list;
     }
   }
